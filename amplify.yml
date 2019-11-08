@@ -1,0 +1,9 @@
+version: 0.1
+frontend:
+  artifacts:
+    # IMPORTANT - Please verify your build output directory
+    baseDirectory: /frontend
+    files:
+      - '**/*'
+  cache:
+    paths: []
