@@ -455,7 +455,7 @@
                                                     class="greennature-item greennature-portfolio-item greennature-classic-portfolio">
                                                     <div class="greennature-ux greennature-classic-portfolio-ux">
                                                         <div class="portfolio-thumbnail greennature-image"><img
-                                                                src="upload/shutterstock_161515241-540x326.jpg" alt=""
+                                                                src="images/regions/eu-west-1.jpg" alt=""
                                                                 width="540" height="326" /></div>
                                                         <div class="portfolio-classic-content">
                                                             <h3 class="portfolio-title">EU (Ireland)</h3>
@@ -473,7 +473,7 @@
                                                     class="greennature-item greennature-portfolio-item greennature-classic-portfolio">
                                                     <div class="greennature-ux greennature-classic-portfolio-ux">
                                                         <div class="portfolio-thumbnail greennature-image"><img
-                                                                src="images/regions/us-gov-west-1.jpg" alt=""
+                                                                src="images/regions/us-gov-west-1.png" alt=""
                                                                 width="540" height="326" /></div>
                                                         <div class="portfolio-classic-content">
                                                             <h3 class="portfolio-title">AWS GovCloud (US-West)</h3>
@@ -687,11 +687,23 @@
                                 var url = 'https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://trek10-content.s3.amazonaws.com/CFT/cloud-offset-iam.yaml&stackName=CloudOffset&param_ExternalId=' + externalId;
                                 var win = window.open(url, '_blank');
                                 win.focus();
+                                doRequest();
+                            }
+
+                            async function doRequest(){
+                                const response = await fetch('https://3wk97r1jd1.execute-api.us-west-2.amazonaws.com/Prod/report?external=rekt10');
+                                const myJson = await response.json();
+                                console.log(JSON.stringify(myJson));
                             }
                         </script>
                         <div style="text-align: center;">
                             <a onclick="generateLinkWithExternalId()" class="greennature-button">Connect my AWS
                                 Account</a>
+                        </div>
+
+                        <div>
+                            <div id="#reportsheet"></div>
+                            <div id="#reportcsv"></div>
                         </div>
                     </div>
 
