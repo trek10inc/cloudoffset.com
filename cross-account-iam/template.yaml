@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudOffset Access Stack
+
+Parameters:
+  ExternalId:
+    Type: String
+    Description: ExternalId to prevent confused deputy problem. https://aws.amazon.com/blogs/security/how-to-use-external-id-when-granting-access-to-your-aws-resources/ 
+
+Resources:
+  CloudOffsetUsageGathererRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - "454679818906"
+            Action:
+              - sts:AssumeRole
+            Condition:
+              StringEquals:
+                'sts:ExternalID': !Ref ExternalId
+      Path: /cloudoffset/
+      ManagedPolicyArns:
+        - !Ref CloudOffsetUsageGathererPolicy
+  CloudOffsetUsageGathererPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties: 
+      Path: /cloudoffset/
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - ce:GetCostAndUsage
+              - ce:GetDimensionValues
+              - ce:GetTags
+              - organizations:ListAccounts
+            Resource: "*"

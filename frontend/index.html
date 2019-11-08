@@ -409,15 +409,16 @@
                                                     class="greennature-item greennature-portfolio-item greennature-classic-portfolio">
                                                     <div class="greennature-ux greennature-classic-portfolio-ux">
                                                         <div class="portfolio-thumbnail greennature-image"><img
-                                                                src="images/regions/ca-central-1.jpg" alt=""
-                                                                width="540" height="326" /></div>
+                                                                src="images/regions/ca-central-1.jpg" alt="" width="540"
+                                                                height="326" /></div>
                                                         <div class="portfolio-classic-content">
                                                             <h3 class="portfolio-title">Canada (Central)</h3>
                                                             <div class="greennature-portfolio-info">
                                                                 <div class="portfolio-info portfolio-tag"><span href="#"
                                                                         rel="tag">ca-central-1</span></div>
                                                                 <div class="portfolio-excerpt">
-                                                                        Quebec, Canada. Photo by Sébastien Marchand on Unsplash.
+                                                                    Quebec, Canada. Photo by Sébastien Marchand on
+                                                                    Unsplash.
                                                                     <div class="clear"></div>
                                                                 </div>
                                                                 <div class="clear"></div>
@@ -1165,22 +1166,48 @@
             <div class="greennature-payment-lightbox-inner">
                 <form class="greennature-payment-form" id="greennature-payment-form">
                     <h3 class="greennature-payment-lightbox-title">
-                        <span class="greennature-head">You are donating to :</span>
-                        <span class="greennature-tail">Greennature Foundation</span>
+                        <span class="greennature-tail">Offset your Cloud</span>
                     </h3>
 
                     <div class="greennature-payment-amount">
-                        <div class="greennature-payment-amount-head">How much would you like to donate?</div>
-                        <a class="greennature-payment-price-preset greennature-active" data-val="10">$10</a>
+                        <div class="greennature-payment-amount-head">How it Works</div>
+                        <!-- <a class="greennature-payment-price-preset greennature-active" data-val="10">$10</a>
                         <a class="greennature-payment-price-preset" data-val="20">$20</a>
-                        <a class="greennature-payment-price-preset" data-val="30">$30</a>
-                        <input class="greennature-payment-price-fill" type="text" placeholder="Or Your Amount(USD)" />
+                        <a class="greennature-payment-price-preset" data-val="30">$30</a> -->
+                        <!-- <input class="greennature-payment-price-fill" type="text" placeholder="Or Your Amount(USD)" />
                         <input class="greennature-payment-price" type="hidden" name="amount" value="10" />
 
-                        <input class="greennature-payment-price" type="hidden" name="a3" value="10">
+                        <input class="greennature-payment-price" type="hidden" name="a3" value="10"> -->
+                        <ol>
+                            <li>Allow CloudOffset to access your AWS Account via a CloudFormation template. If you are
+                                using an organization, allow us access to the Master Organization. <i>We only get access
+                                    to CostExplorer and listing your organizations accounts, you can review <a
+                                        href="#">the exact policy</a> we use.</i></li>
+                            <li>We'll scan your account with an AWS Lambda function from our account (We're
+                                carbon-nuetral via us-west-2!)</li>
+                            <li>We crunch the numbers and let you know your average offset cost over the last 3 months.
+                            </li>
+                            <li>You find a Carbon Offset provider or use one of our suggestions!</li>
+                        </ol>
                     </div>
 
-                    <div class="greennature-paypal-attribute">
+                    <div class="greennature-payment-amount">
+                        <script>
+                            function generateLinkWithExternalId() {
+                                var externalId =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                                console.log(externalId);
+                                var url = 'https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://trek10-content.s3.amazonaws.com/CFT/cloud-offset-iam.yaml&stackName=CloudOffset&param_ExternalId='+externalId;
+                                var win = window.open(url, '_blank');
+                                win.focus();
+                            }
+                        </script>
+                        <div style="text-align: center;">
+                            <a onclick="generateLinkWithExternalId()" class="greennature-button">Connect my AWS Account</a>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="greennature-paypal-attribute">
                         <span class="greennature-head">Would you like to make regular donations?</span>
                         <span class="greennature-subhead">I would like to make </span>
                         <select name="t3" class="greennature-recurring-option">
@@ -1212,7 +1239,7 @@
                         <input type="hidden" name="bn" value="PP-BuyNowBF">
                         <input type="hidden" name="src" value="1">
                         <input type="hidden" name="sra" value="1">
-                    </div>
+                    </div> -->
 
                     <div class="greennature-form-fields">
                         <div class="six columns">
