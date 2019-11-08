@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+
+Resources:
+  CarbonCalculator:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.7
+      Timeout: 30
+      MemorySize: 1024
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - CloudWatchPutMetricPolicy: {}
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:PutObject
+                - s3:GetObject
+              Resource: !Sub '${ReportBucket.Arn}/*'
+            - Effect: Allow
+              Action: 'sts:AssumeRole'
+              Resource: 'arn:aws:iam::*:role/offsetcloud/*'
+      CodeUri: src/
+      Handler: scrape_services.lambda_handler
+      Environment:
+        Variables: {}
+      Events:
+        GetReport:
+          Type: Api
+          Properties:
+              Path: /report
+              Method: post
+  ReportBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - Id: Retain30days
+            Status: Enabled
+            ExpirationInDays: 30
+            NoncurrentVersionExpirationInDays: 30
+      VersioningConfiguration:
+        Status: Enabled
