@@ -697,7 +697,13 @@
                             }
 
                             async function doRequest(){
-                                const response = await fetch('https://3wk97r1jd1.execute-api.us-west-2.amazonaws.com/Prod/report?external=rekt10');
+                                const response = await fetch(
+                                    'https://3wk97r1jd1.execute-api.us-west-2.amazonaws.com/Prod/report?external=rekt10',
+                                    {
+                                        method: 'GET',
+                                        mode: 'no-cors'
+                                    }
+                                );
                                 const myJson = await response.json();
                                 console.log(JSON.stringify(myJson));
                             }
@@ -708,8 +714,8 @@
                         </div>
 
                         <div>
-                            <div id="#reportsheet"></div>
-                            <div id="#reportcsv"></div>
+                            <div id="#reportsheet"><a href="">The full report</a></div>
+                            <div id="#reportcsv"><a href="">Your offset need</a></div>
                         </div>
                     </div>
 
