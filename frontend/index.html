@@ -693,19 +693,8 @@
                                 var url = 'https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://trek10-content.s3.amazonaws.com/CFT/cloud-offset-iam.yaml&stackName=CloudOffset&param_ExternalId=' + externalId;
                                 var win = window.open(url, '_blank');
                                 win.focus();
-                                doRequest();
-                            }
-
-                            async function doRequest(){
-                                const response = await fetch(
-                                    'https://3wk97r1jd1.execute-api.us-west-2.amazonaws.com/Prod/report?external=rekt10',
-                                    {
-                                        method: 'GET',
-                                        mode: 'no-cors'
-                                    }
-                                );
-                                const myJson = await response.json();
-                                console.log(JSON.stringify(myJson));
+                                var x = document.getElementById("hiddenthing");
+                                x.style.display = "block";
                             }
                         </script>
                         <div style="text-align: center;">
@@ -713,9 +702,9 @@
                                 Account</a>
                         </div>
 
-                        <div>
-                            <div id="#reportsheet"><a href="">The full report</a></div>
-                            <div id="#reportcsv"><a href="">Your offset need</a></div>
+                        <div id="hiddenthing" style="display:none;">
+                            <div id="#reportsheet"><a href="https://offset-cloud-dev-reportbucket-x6z98i9xih8c.s3-us-west-2.amazonaws.com/rekt10.xlsx">The full report</a></div>
+                            <div id="#reportcsv"><a href="https://offset-cloud-dev-reportbucket-x6z98i9xih8c.s3-us-west-2.amazonaws.com/rekt10.csv">Your offset need</a></div>
                         </div>
                     </div>
 
