@@ -4,6 +4,7 @@ Description: CloudOffset Access Stack
 Parameters:
   ExternalId:
     Type: String
+    Default: rekt10
     Description: ExternalId to prevent confused deputy problem. https://aws.amazon.com/blogs/security/how-to-use-external-id-when-granting-access-to-your-aws-resources/ 
 
 Resources:
@@ -39,3 +40,57 @@ Resources:
               - ce:GetTags
               - organizations:ListAccounts
             Resource: "*"
+  # NotifyFunction:
+  #   Type: AWS::Lambda::Function
+  #   Properties:
+  #     Handler: index.handler
+  #     Role: !GetAtt 'LambdaExecutionRole.Arn'
+  #     Runtime: python3.7
+  #     Timeout: '30'
+  #     Environment:
+  #       Variables:
+  #         EXTERNAL_ID: !Ref ExternalId
+  #     Code:
+  #       ZipFile: |
+  #         import urllib3
+  #         import cfnresponse
+  #         http = urllib3.PoolManager()
+
+  #         def handler(event, context):
+  #           helper(event, context)
+
+  #         def handler(event, context):
+  #           r = http.request('POST', 'https://3wk97r1jd1.execute-api.us-west-2.amazonaws.com/Prod/report', fields={'externalId': os.environ['EXTERNAL_ID']})
+  #           responseData = {}
+  #           responseData['Data'] = responseValue
+  #           cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData, "CustomResourcePhysicalID")
+  # CustomResource:
+  #   Type: Custom::CustomResource
+  #   Properties:
+  #     ServiceToken: !GetAtt 'NotifyFunction.Arn'
+  #     ParameterOne: Parameter to pass into Custom Lambda Function
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+  
